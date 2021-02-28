@@ -193,7 +193,6 @@ function update() {
 	selected.userData.v.x = parseFloat(document.getElementById("v_X").value);
 	selected.userData.v.y = parseFloat(document.getElementById("v_Y").value);
 	selected.userData.v.z = parseFloat(document.getElementById("v_Z").value);
-	console.log(selected.userData.v);
 	
 	selected.scale.x = parseFloat(document.getElementById("scale").value);
 	selected.scale.y = selected.scale.x;
@@ -201,6 +200,7 @@ function update() {
 	
 	selected.userData.mass = parseFloat(document.getElementById("mass").value);
 	
+	updateVArrow(selected);
 	saveData(getBodies());
 }
 
@@ -210,9 +210,10 @@ function addObj() {
 	m.position.y = 0;
 	m.position.x = 0;
 	
-	m.userData = {v: new THREE.Vector3(), a: new THREE.Vector3(), mass: 10};
+	m.userData = {v: new THREE.Vector3(), a: new THREE.Vector3(), mass: 10, vArrow: new THREE.ArrowHelper( THREE.Vector3(1,0, 0), m.position, 0, 0x003366 )};
 	
 	scene.add(m);
+	scene.add(m.userData.vArrow);
 	
 	deselect();
 	selectBody(m);
@@ -265,6 +266,7 @@ function nextTimestep() {
 		bodies[i].position.add( velocity.multiplyScalar(t).add( accel.multiplyScalar(t*t/2) ) );
 		//Update velocity
 		bodies[i].userData.v.add(bodies[i].userData.a.multiplyScalar(t));
+		updateVArrow(bodies[i]);
 	}
 	
 	if (selected != null)
@@ -331,18 +333,27 @@ function loadData() {
 			m.position.y = obj.Y;
 			m.position.z = obj.Z;
 			
-			m.userData = {v: new THREE.Vector3(obj.VX, obj.VY, obj.VZ), a: new THREE.Vector3(), mass: obj.M};
+			m.userData = {v: new THREE.Vector3(obj.VX, obj.VY, obj.VZ), a: new THREE.Vector3(), mass: obj.M, vArrow: new THREE.ArrowHelper( THREE.Vector3(1,0, 0), m.position, 0, 0x003366 )};
 			
 			m.scale.x = obj.S;
 			m.scale.y = m.scale.x;
 			m.scale.z = m.scale.x;
 			
 			scene.add(m);
+			scene.add(m.userData.vArrow);
+			updateVArrow(m);
 		}
 		catch(err) {
 			continue;
 		}
 	}
+}
+
+//Update velocity arrows
+function updateVArrow(object) {
+	object.userData.vArrow.position.copy(object.position);
+	object.userData.vArrow.setLength(object.userData.v.length() * 10);
+	object.userData.vArrow.setDirection(object.userData.v.clone().normalize());
 }
 
 function copyUrl() {

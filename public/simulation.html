@@ -36,28 +36,28 @@
 					<a href="#"><i class="fa fa-hand-pointer fa-lg"></i> Selected <span class="arrow"></span></a>
 				</li>
 				<ul class="sub-menu collapse" id="objectInfo">
-					<li data-toggle="collapse" data-target="#objectLoc" class="out dropdown_opt_header"><a href="#">Location</a></li>
+					<li data-toggle="collapse" data-target="#objectLoc" class="out dropdown_opt_header"><a href="#">Location (m)</a></li>
 					<ul class="sub-menu out" id="objectLoc">
 						<li class="dropdown_opt">X <input id="X" onchange="update()" type="number" disabled="true"></input></li>
 						<li class="dropdown_opt">Y <input id="Y" onchange="update()" type="number" disabled="true"></input></li>
 						<li class="dropdown_opt">Z <input id="Z" onchange="update()" type="number" disabled="true"></input></li>
 					</ul>
-					<li data-toggle="collapse" data-target="#objectV" class="out dropdown_opt_header"><a href="#">Velocity</a></li>
+					<li data-toggle="collapse" data-target="#objectV" class="out dropdown_opt_header"><a href="#">Velocity (m/s)</a></li>
 					<ul class="sub-menu out" id="objectV">
 						<li class="dropdown_opt">X <input id="v_X" onchange="update()" type="number" disabled="true"></input></li>
 						<li class="dropdown_opt">Y <input id="v_Y" onchange="update()" type="number" disabled="true"></input></li>
 						<li class="dropdown_opt">Z <input id="v_Z" onchange="update()" type="number" disabled="true"></input></li>
 					</ul>
 					<li class="option">Scale <input id="scale" onchange="update()" type="number" disabled="true"></input></li>
-					<li class="option">Mass <input id="mass" onchange="update()" type="number" disabled="true"></input></li>
+					<li class="option">Mass (kg) <input id="mass" onchange="update()" type="number" disabled="true"></input></li>
 				</ul>
 				<li data-toggle="collapse" data-target="#service" class="collapsed">
 					<a href="#"><i class="fa fa-laptop fa-lg"></i> Simulation <span class="arrow"></span></a>
 				</li>
 				<ul class="sub-menu collapse" id="service">
 					<li class="option">G (constant) <input value=6.67e-11 id="G" onchange="update()" type="number"></input></li>
-					<li class="option">Timestep <input value=10 id="timestep" onchange="update()" type="number"></input></li>
-					<li class="option">FPS <input value=1 id="fps" onchange="update()" type="number"></input></li>
+					<li class="option">Timestep (s) <input value=1 id="timestep" onchange="update()" type="number"></input></li>
+					<li class="option">FPS <input value=20 id="fps" onchange="update()" type="number"></input></li>
 					<li class="option"><a href="javascript:toggleSimulation();" id="toggleSim2">Start Simulation</a></li>
 				</ul>
 
