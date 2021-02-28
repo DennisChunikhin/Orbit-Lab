@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Orbit Lab</title>
+	<link rel="stylesheet" href="style.css">
+	
+	<script src="js/three.min.js"></script>
+	<script src="js/OrbitControls.js"></script>
+	
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+
+  	<script src="https://kit.fontawesome.com/f71a594843.js" crossorigin="anonymous"></script>
+	
+	<link rel="stylesheet" href="bootstrap/dist/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway&display=swap">
+	
+	<link rel="icon" type="image/png" href="img/favicon.ico">
+</head>
+<body>
+
+	<div class="text-box">
+		<div class="heading text-center">Orbit Lab</div>
+		<div class="heading text-center">Explore the unknown</div>
+		<div class="button-wrapper">
+			<a onmouseover="speed()" onmouseout="slow()" class="button" href="simulation.html">Launch Simulation</a>
+		</div>
+	</div>
+
+	<script>
+		let scene, camera, renderer, starGeo, stars, v_init=0, changeSpeed, y_back=200, spinRate=0.002;
+		
+		function init() {
+			scene = new THREE.Scene();
+			camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 1000);
+			camera.position.z = 1;
+			camera.rotation.x = Math.PI/2;
+			
+			renderer = new THREE.WebGLRenderer();
+			renderer.setSize(window.innerWidth, window.innerHeight);
+			document.body.appendChild(renderer.domElement);
+			
+			//Stars are vertices of one big mesh
+			starGeo = new THREE.Geometry();
+			for (let i = 0; i < 6000; i++) {
+				star = new THREE.Vector3(
+					Math.random() * 600 - 300,
+					Math.random() * 600 - 300,
+					Math.random() * 600 - 300,
+				);
+				star.velocity = 0;
+				star.acceleration = 0.02;
+				starGeo.vertices.push(star);
+			}
+			//Star material (white circle)
+			let sprite = new THREE.TextureLoader().load('img/star.png');
+			let starMat = new THREE.PointsMaterial({
+				color: 0xaaaaaa,
+				size: 0.7,
+				map: sprite
+			});
+			
+			stars = new THREE.Points(starGeo, starMat);
+			scene.add(stars);
+			animate();
+		}
+		//Stars accelerating towards camera & camear spinning
+		function animate() {
+			if (v_init <= 0) {
+				window.clearInterval(changeSpeed);
+				v_init = 0;
+				spinRate = 0.002;
+			}
+			else if (v_init >= 6) {
+				window.clearInterval(changeSpeed);
+				v_init = 6;
+				spinRate = 0.004;
+			}
+
+			starGeo.vertices.forEach(p=>{
+				p.velocity += p.acceleration;
+				p.y -= p.velocity;
+				if(p.y < -200) {
+					p.y = y_back;
+					p.velocity = v_init;
+				}
+			});
+			starGeo.verticesNeedUpdate = true;
+			stars.rotation.y += spinRate;
+			renderer.render(scene, camera);
+			requestAnimationFrame(animate);
+		}
+		init();
+		
+		//Gradually change speed of stars and rate of sping of camera
+		function speed() {
+			window.clearInterval(changeSpeed);
+			v_init += 0.1;
+			y_back = 300;
+			spinRate = 0.004;
+			changeSpeed = window.setInterval(increaseSpeed, 1);
+		}
+		function slow() {
+			window.clearInterval(changeSpeed);
+			v_init -= 0.1;
+			y_back = 200;
+			changeSpeed = window.setInterval(decreaseSpeed, 1);
+		}
+		function increaseSpeed() {
+			v_init += 0.2;
+			spinRate += 0.00002;
+		}
+		function decreaseSpeed() {
+			v_init -= 0.1;
+			spinRate -= 0.00004;
+		}
+		
+		//Resize window
+		window.addEventListener('resize', function() {
+			renderer.setSize(window.innerWidth, window.innerHeight);
+			camera.aspect = window.innerWidth / window.innerHeight;
+			camera.updateProjectionMatrix();
+		});
+	</script>
+	
+	<!-- The core Firebase JS SDK is always required and must be listed first -->
+	<script src="/__/firebase/8.2.9/firebase-app.js"></script>
+
+	<!-- TODO: Add SDKs for Firebase products that you want to use https://firebase.google.com/docs/web/setup#available-libraries -->
+	<script src="/__/firebase/8.2.9/firebase-analytics.js"></script>
+
+	<!-- Initialize Firebase -->
+	<script src="/__/firebase/init.js"></script>
+
+</body>
+</html>

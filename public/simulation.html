@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Orbit Lab - Simulation</title>
+	<link rel="stylesheet" href="sim_style.css">
+	
+	<script src="js/three.min.js"></script>
+	<script src="js/OrbitControls.js"></script>
+	
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+
+  	<script src="https://kit.fontawesome.com/f71a594843.js" crossorigin="anonymous"></script>
+	
+	<link rel="stylesheet" href="bootstrap/dist/css/bootstrap.min.css">
+	
+	<link rel="icon" type="image/png" href="img/favicon.ico">
+</head>
+<body>
+
+	<div class="nav-side-menu" id="menu">
+		<div class="brand"><a href="index.html">Orbit Lab</a></div>
+		<div class="menu-list">
+			<ul id="menu-content" class="menu-content">
+				<li>
+					<a href="javascript:toggleSimulation();" id="toggleSim1">
+						<i class="fa fa-play fa-lg"></i> Start Simulation
+					</a>
+				</li>
+				<li>
+					<a href="javascript:addObj();saveData(getBodies());">
+						<i class="fa fa-plus fa-lg"></i> Add Object
+					</a>
+				</li>
+				<li data-toggle="collapse" data-target="#objectInfo" class="collapsed">
+					<a href="#"><i class="fa fa-hand-pointer fa-lg"></i> Selected <span class="arrow"></span></a>
+				</li>
+				<ul class="sub-menu collapse" id="objectInfo">
+					<li data-toggle="collapse" data-target="#objectLoc" class="out dropdown_opt_header"><a href="#">Location</a></li>
+					<ul class="sub-menu out" id="objectLoc">
+						<li class="dropdown_opt">X <input id="X" onchange="update()" type="number" disabled="true"></input></li>
+						<li class="dropdown_opt">Y <input id="Y" onchange="update()" type="number" disabled="true"></input></li>
+						<li class="dropdown_opt">Z <input id="Z" onchange="update()" type="number" disabled="true"></input></li>
+					</ul>
+					<li data-toggle="collapse" data-target="#objectV" class="out dropdown_opt_header"><a href="#">Velocity</a></li>
+					<ul class="sub-menu out" id="objectV">
+						<li class="dropdown_opt">X <input id="v_X" onchange="update()" type="number" disabled="true"></input></li>
+						<li class="dropdown_opt">Y <input id="v_Y" onchange="update()" type="number" disabled="true"></input></li>
+						<li class="dropdown_opt">Z <input id="v_Z" onchange="update()" type="number" disabled="true"></input></li>
+					</ul>
+					<li class="option">Scale <input id="scale" onchange="update()" type="number" disabled="true"></input></li>
+					<li class="option">Mass <input id="mass" onchange="update()" type="number" disabled="true"></input></li>
+				</ul>
+				<li data-toggle="collapse" data-target="#service" class="collapsed">
+					<a href="#"><i class="fa fa-laptop fa-lg"></i> Simulation <span class="arrow"></span></a>
+				</li>
+				<ul class="sub-menu collapse" id="service">
+					<li class="option">G (constant) <input value=6.67e-11 id="G" onchange="update()" type="number"></input></li>
+					<li class="option">Timestep <input value=10 id="timestep" onchange="update()" type="number"></input></li>
+					<li class="option">FPS <input value=1 id="fps" onchange="update()" type="number"></input></li>
+					<li class="option"><a href="javascript:toggleSimulation();" id="toggleSim2">Start Simulation</a></li>
+				</ul>
+
+
+				<li data-toggle="collapse" data-target="#new" class="collapsed">
+					<a href="#"><i class="fa fa-share fa-lg"></i> Share <span class="arrow"></span></a>
+				</li>
+				<ul class="sub-menu collapse" id="new">
+					<li class="option"><a href="javascript:saveData(getBodies());">Save Data</a></li>
+					<li class="option"><a href="javascript:copyUrl()">Copy Link</a></li>
+				</ul>
+			</ul>
+		</div>
+	</div>
+	<div id="main">
+		
+		<div id="threeContainer"></div>
+
+		</div>
+	</div>
+
+
+	<script src="simulation.js"></script>
+
+</body>
+</html>
