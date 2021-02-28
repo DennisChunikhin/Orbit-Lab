@@ -210,7 +210,7 @@ function addObj() {
 	m.position.y = 0;
 	m.position.x = 0;
 	
-	m.userData = {v: new THREE.Vector3(), a: new THREE.Vector3(), mass: 10, vArrow: new THREE.ArrowHelper( THREE.Vector3(1,0, 0), m.position, 0, 0x003366 )};
+	m.userData = {v: new THREE.Vector3(), a: new THREE.Vector3(), mass: 10, vArrow: new THREE.ArrowHelper( THREE.Vector3(1,0, 0), m.position, 0, 0xfafeff )};
 	
 	scene.add(m);
 	scene.add(m.userData.vArrow);
@@ -333,7 +333,7 @@ function loadData() {
 			m.position.y = obj.Y;
 			m.position.z = obj.Z;
 			
-			m.userData = {v: new THREE.Vector3(obj.VX, obj.VY, obj.VZ), a: new THREE.Vector3(), mass: obj.M, vArrow: new THREE.ArrowHelper( THREE.Vector3(1,0, 0), m.position, 0, 0x003366 )};
+			m.userData = {v: new THREE.Vector3(obj.VX, obj.VY, obj.VZ), a: new THREE.Vector3(), mass: obj.M, vArrow: new THREE.ArrowHelper( THREE.Vector3(1,0, 0), m.position, 0, 0xfafeff )};
 			
 			m.scale.x = obj.S;
 			m.scale.y = m.scale.x;
